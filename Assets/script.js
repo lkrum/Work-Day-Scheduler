@@ -9,7 +9,8 @@ var timeDisplayEl = $('#currentDay');
 var dateToday;
 var saveSchedule;
 var eventList;
-let calHour = ["hour-9", "hour-10", "hour-11", "hour-12", "hour-1", "hour-2", "hour-3", "hour-4", "5"];
+var currentTime;
+let calHour = ["9", "10", "11", "12", "1", "2", "3", "4", "5"];
 
 $(function () {
   
@@ -39,6 +40,18 @@ $(function () {
   // current hour in 24-hour time?
   //
 
+  currentTime = dayjs().hour();
+  function timeCode() {
+  if (calHour[i] < currentTime) {
+    $('.time-block').removeClass(['present', 'past']).addClass('future');
+  }
+  if (calHour[i] > currentTime) {
+    $('.time-block').removeClass(['future', 'present']).addClass('past');
+  } else {
+    $('.time-block').removeClass(['future', 'past']).addClass('present');
+  }
+}
+
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id attribute of each time-block be used to do this?
   
@@ -48,12 +61,11 @@ $(function () {
       window.localStorage.setItem('event-schedule', eventList[i]);
       window.localStorage.setItem('time', calHour[i]);
       localStorage.getItem('time');
+    
     }
   }
 
-  saveSchedule();
-
-
+  
 
   // current date 
   function showDate() {
@@ -61,5 +73,7 @@ $(function () {
   timeDisplayEl.text(dateToday);
  }
   showDate();
+  saveSchedule();
+  timeCode(); 
 
 });
