@@ -8,17 +8,21 @@ var timeDisplayEl = $('#currentDay');
 // variables
 var dateToday;
 var saveSchedule;
+var eventList;
+let calHour = ["hour-9", "hour-10", "hour-11", "hour-12", "hour-1", "hour-2", "hour-3", "hour-4", "5"];
 
 $(function () {
   
   
   // TODO: Add a listener for click events on the save button. This code should
-  // $('#saveBtn').click(function() {
-  //   var saveSchedule = 
 
-  // }
-  
-  // );
+  // user inputs event
+  // event and time need to be saved in local storage when save button is clicked
+
+
+  $('.saveBtn').click(function() {
+    saveSchedule();
+  });
 
 
   // use the id in the containing time-block as a key to save the user input in
@@ -36,14 +40,26 @@ $(function () {
   //
 
   // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
+  // the values of the corresponding textarea elements. HINT: How can the id attribute of each time-block be used to do this?
+  
+  saveSchedule = function () {
+    for (let i = 0; i < calHour.length; i++) {
+      eventList = $(".description");
+      window.localStorage.setItem('event-schedule', eventList[i]);
+      window.localStorage.setItem('time', calHour[i]);
+      localStorage.getItem('time');
+    }
+  }
 
-  // TODO: Add code to display the current date in the header of the page.
+  saveSchedule();
+
+
+
+  // current date 
   function showDate() {
   var dateToday = dayjs().format('MMM DD, YYYY');
   timeDisplayEl.text(dateToday);
  }
   showDate();
+
 });
