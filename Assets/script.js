@@ -41,7 +41,7 @@ $(function () {
     eventList = $(this).siblings('.description').val();
     eventTime = $(this).parent().attr('id', calHour[i]);
       
-    localStorage.setItem(eventList, eventTime);
+    localStorage.setItem(eventTime, eventList);
     
   }
 }
@@ -72,10 +72,16 @@ function colorBlock() {
 
 // TODO: Add code to get any user input that was saved in localStorage and set
 // the values of the corresponding textarea elements. HINT: How can the id attribute of each time-block be used to do this?
-  userInput = parseInt($(this).attr('e'));
-  var projects = readProjectsFromStorage();
-
-
+function readFromStorage() {
+  userInput = parseInt($(this).attr('id')); 
+  if (userInput) {
+    userInput = JSON.parse(userInput);
+  } else {
+    userInput = [];
+  }
+  return userInput;
+}
+  readFromStorage()
 
 // current date 
 function showDate() {

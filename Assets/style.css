@@ -1,21 +1,31 @@
+
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+  background-color: #feedff;
 }
 
 header {
   text-align: center;
   color:#06aed5;
   border-bottom: 10px #06aed5 solid ;
+  background-color: #feedff;
+}
+
+.lead {
+  font-size: 25px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+#currentDay {
+  font-size: 35px;
+  font-weight: 800;
+  color: #0989a6;
 }
 
 .display-3 {
   font-weight: 600;
-}
-
-header p {
-  font-weight: 700;
-  
 }
 
 textarea {
@@ -43,6 +53,8 @@ textarea {
   background-color: #ffffff;
   color: #000000;
   border-top: 1px dashed #000000;
+  text-align: center;
+  font-size: 24px;
 }
 
 .past {
