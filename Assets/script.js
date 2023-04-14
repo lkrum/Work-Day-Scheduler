@@ -1,13 +1,10 @@
-// read from localStorage
-// Populate page with data if exists in localStorage
-
 // variable expressions
 var timeDisplayEl = $('#currentDay');
 var saveBtn = $('.saveBtn');
 
 // variables
 var dateToday;
-var currentTime;
+var currentTime = dayjs().hour();;
 var eventTime;
 var eventList;
 
@@ -19,12 +16,14 @@ $('.saveBtn').click(function () {
   localStorage.setItem(eventTime, eventList);
 });
 
-
-// colors depicting past(pink), present(blue), and future(green) times.
+// function to compare time elements to change the color and take items from storage. Jessica Saddington and Emma Carr helped me with the split method.
 $('.time-block').each(function () {
-  currentTime = dayjs().hour();
-  eventTime = parseInt($(this).attr('id').split('-')[1]);
-
+  var hourEL = $(this).attr('id');
+  eventTime = parseInt(hourEL.split('-')[1]);
+  // Patrick Lake helped me come up with the getItem and .val methods here to display items from local storage onto the text input box
+  var hourStorage = localStorage.getItem(hourEL);
+  $(this).children('.description').val(hourStorage);
+  // if statements comparing current time to event time 
   if (eventTime === currentTime) {
     $(this).addClass('present');
   }
@@ -35,17 +34,7 @@ $('.time-block').each(function () {
     $(this).addClass('future');
 });
 
-
-// TODO: Add code to get any user input that was saved in localStorage and set
-// the values of the corresponding textarea elements. HINT: How can the id attribute of each time-block be used to do this?
-
-
-// Jessica Saddington helped me with this for-loop
-for (i = 9; i <= 17; i++) {
-  $(`#hour - ${i}.eventTime`).val(localStorage.getItem(`hour - ${i}`));
-};
-
-// current date 
+// function to show the current date and time
 function showDate() {
   dateToday = dayjs().format('dddd MMM DD, YYYY hh:mm:ss');
   timeDisplayEl.text(dateToday);
