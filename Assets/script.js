@@ -29,67 +29,52 @@ var currentTime;
 var eventTime;
 var eventList;
 var userInput;
-let calHour = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+var hourLoop;
 
 $(function () {
 
-  // TODO: Add a listener for click events on the save button. This code should use the id in the containing time-block as a key to save the user input in local storage
-  // localStorage.setItem(time, value);
-  $(saveBtn).on('click', saveSchedule()) 
-  function saveSchedule(eventList, eventTime) {
-    for(let i = 0; i < calHour.length; i++) {
-    eventList = $(this).siblings('.description').val();
-    eventTime = $(this).parent().attr('id', calHour[i]);
-      
-    localStorage.setItem(eventTime, eventList);
-    
+  // event listener for save button. Jessica Saddington, Emma Carr, and Diem Ly helped me come up with this
+  $('.saveBtn').click(function () {
+      eventList = $(this).siblings('.description').val();
+      eventTime = $(this).parent().attr('id');
+
+      localStorage.setItem(eventTime, eventList);
+  });
+
+
+  // colors depicting past(red), present(blue), and future(green) times.
+  $('.time-block').each(function () {
+    currentTime = dayjs().hour();
+    eventTime = parseInt($(this).attr('id').split('-')[1]);
+
+    if (eventTime === currentTime) {
+      $(this).addClass('present');
+    }
+    else if (eventTime < currentTime) {
+      $(this).addClass('past');
+    }
+    else
+      $(this).addClass('future');
+  });
+
+  console.log(eventTime)
+  console.log(currentTime)
+  console.log(eventTime < currentTime)
+
+  // TODO: Add code to get any user input that was saved in localStorage and set
+  // the values of the corresponding textarea elements. HINT: How can the id attribute of each time-block be used to do this?
+
+  // Jessica Saddington helped me with this for loop
+  for (i = 9; i <= 17; i++) {
+    $(`#hour - ${i}.eventTime`).val(localStorage.getItem(`hour - ${i}`));
+  };
+
+  // current date 
+  function showDate() {
+    dateToday = dayjs().format('MMM DD, YYYY');
+    timeDisplayEl.text(dateToday);
   }
-}
 
-saveSchedule();
-
-function saveProjectsToStorage(projects) {
-  localStorage.setItem('projects', JSON.stringify(projects));
-  localStorage.setItem(eventList, eventTime);
- 
-}
-  
-
-// colors depicting past (red), present (blue), and future (green) times.
-
-currentTime = dayjs().hour();
-function colorBlock() {
-  if (eventTime < currentTime) {
-    $(timeblockEl).removeClass(['present', 'past']).addClass('future');
-  }
-  if (eventTime > currentTime) {
-    $(timeblockEl).removeClass(['future', 'present']).addClass('past');
-  } else {
-    $(timeblockEl).removeClass(['future', 'past']).addClass('present');
-  }
-}
-
-
-// TODO: Add code to get any user input that was saved in localStorage and set
-// the values of the corresponding textarea elements. HINT: How can the id attribute of each time-block be used to do this?
-function readFromStorage() {
-  userInput = parseInt($(this).attr('id')); 
-  if (userInput) {
-    userInput = JSON.parse(userInput);
-  } else {
-    userInput = [];
-  }
-  return userInput;
-}
-  readFromStorage()
-
-// current date 
-function showDate() {
-  dateToday = dayjs().format('MMM DD, YYYY');
-  timeDisplayEl.text(dateToday);
-}
-showDate();
-saveSchedule();
-colorBlock()
+  showDate();
 
 });
