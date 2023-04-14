@@ -1,10 +1,6 @@
 // read from localStorage
 // Populate page with data if exists in localStorage
 
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-
 // variable expressions
 var timeDisplayEl = $('#currentDay');
 var saveBtn = $('.saveBtn');
@@ -24,7 +20,7 @@ var eventList;
   });
 
 
-  // colors depicting past(red), present(blue), and future(green) times.
+  // colors depicting past(pink), present(blue), and future(green) times.
   $('.time-block').each(function () {
     currentTime = dayjs().hour();
     eventTime = parseInt($(this).attr('id').split('-')[1]);
